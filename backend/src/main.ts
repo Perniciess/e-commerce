@@ -17,6 +17,12 @@ async function bootstrap() {
     app.use(cookieParser());
     app.useGlobalPipes(new ValidationPipe());
     
+    app.enableCors({
+        origin: true,
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+        credentials: true,
+    });
+
     app.use('/uploads', express.static(join(process.cwd(), 'uploads')));  
     await app.listen(3000);
 }

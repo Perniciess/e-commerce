@@ -31,7 +31,6 @@ export function UiDescription() {
     const web_url = process.env.NEST_WEB_URL;
 
     const product = carousel[0].product[activeImage];
-
     return (
         <>
             <div className="place-items-center grid grid-cols-2 xs:grid-cols-1 xxs:grid-cols-1 shadow-2xl mx-auto mt-20 mb-8 rounded-3xl w-full max-w-5xl">

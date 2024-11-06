@@ -3,7 +3,7 @@ import { ProductsController } from "./products.controller";
 import { ProductsService } from "./products.service";
 import { MulterModule } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
-import * as path from 'path';
+
 
 @Module({
     controllers: [ProductsController],
@@ -11,7 +11,7 @@ import * as path from 'path';
     imports: [
         MulterModule.register({
             storage: diskStorage({
-                destination: path.join(__dirname, '..',  'uploads'),
+                destination: '../../uploads',
                 filename: (req, file, cb) => {
                     const filename = `${Date.now()}-${file.originalname}`;
                     cb(null, filename);
