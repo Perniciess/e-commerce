@@ -23,21 +23,22 @@ export function UiDescription() {
             setActiveImage((activeImage - 1 + productCount) % productCount);
         }
     };
-
     if (!carousel || !carousel[0].product) {
         return <div>Loading...</div>;
     }
 
     const web_url = process.env.NEST_WEB_URL;
 
-    const product = carousel[0].product[activeImage];
+    const product = carousel[0].product[activeImage]
+
+    const product_image = product.image.split("\\")[1];
     return (
         <>
             <div className="place-items-center grid grid-cols-2 xs:grid-cols-1 xxs:grid-cols-1 shadow-2xl mx-auto mt-20 mb-8 rounded-3xl w-full max-w-5xl">
                 <div className="relative flex justify-center items-center rounded-2xl w-full h-[30vh] overflow-hidden">
                     <div className="block w-full h-full absolute top-0 left-0">
                         <Image
-                            src={`${web_url}${product.image}`}
+                            src={`${web_url}uploads/${product_image}`}
                             alt=""
                             layout="fill"
                             objectFit="contain"

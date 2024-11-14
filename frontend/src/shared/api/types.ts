@@ -49,6 +49,10 @@ export interface Product {
 	  email: string;
 	  role: string;
   }
+
+  export type removeProductDto = {
+	  product_id: string;
+  }
   
   export type UserListDto = UserDto[];
   

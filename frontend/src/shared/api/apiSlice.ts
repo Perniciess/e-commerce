@@ -13,6 +13,7 @@ import {
     ProductsList,
     CarouselListDto,
     AddRemoveFromToCarousel,
+    removeProductDto
 } from "./types";
 
 type SecondParameter<T extends (...args: any) => any> = T extends (
@@ -226,6 +227,14 @@ export const categoriesDeleteFromCarousel = (
     );
 };
 
+
+export const productsRemoveProduct = (id: string) => {
+    return createInstance<removeProductDto>({
+      url: `/products/delete/${id}`,
+      method: "delete",
+    });
+  };
+
 export type AuthSignUpResult = NonNullable<
     Awaited<ReturnType<typeof authSignUp>>
 >;
@@ -271,4 +280,7 @@ export type categoriesAddToCarousel = NonNullable<
 >;
 export type categoriesDeleteFromCarousel = NonNullable<
     Awaited<ReturnType<typeof categoriesDeleteFromCarousel>>
+>;
+export type productsRemoveProduct = NonNullable<
+    Awaited<ReturnType<typeof productsRemoveProduct>>
 >;

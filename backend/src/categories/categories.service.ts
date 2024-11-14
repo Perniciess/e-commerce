@@ -51,7 +51,6 @@ export class CategoriesService {
                         product_id: true,
                         name: true,
                         price: true,
-
                         brand: {
                             select: {
                                 brand_name: true,
@@ -72,7 +71,6 @@ export class CategoriesService {
                 },
             },
         });
-
     }
 
     async addToCarousel(body: CarouselDto) {

@@ -1,23 +1,48 @@
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+const baseURL = "http://localhost:3000"; // use your own URL here or environment variable
 
-export const apiInstance = axios.create({
-  baseURL: "http://localhost:3000",
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+class ApiError extends Error {
+  constructor(public data: unknown) {
+    super("Api Error");
+  }
+}
 
-export const createInstance = <T>(
-  config: AxiosRequestConfig,
-  options?: AxiosRequestConfig,
-): Promise<T> => {
-  return apiInstance({
-    ...config,
-    ...options,
-  }).then((r) => r.data);
+export const createInstance = async <T>({
+  url,
+  method,
+  params,
+  data,
+  headers,
+}: {
+  url: string;
+  method: "get" | "post" | "put" | "delete" | "patch";
+  params?: Record<string, string>;
+  headers?: HeadersInit;
+  data?: BodyType<unknown>;
+  responseType?: string;
+}): Promise<T> => {
+  try {
+    const response = await fetch(
+      `${baseURL}${url}` + new URLSearchParams(params),
+      {
+        method: method.toUpperCase(),
+        credentials: "include",
+        headers,
+        ...(data ? { body: JSON.stringify(data) } : {}),
+      },
+    );
+
+    if (!response.ok) {
+      throw new ApiError(await response.json());
+    }
+
+    return response.json();
+  } catch (error) {
+      alert("Ошибка подключения к серверу");
+      console.log(4);
+    throw error; // Проброс ошибки дальше, если нужно
+  }
 };
 
-export type BodyType<Data> = Data;
+export type BodyType<BodyData> = BodyData;
+export type ErrorType<Error> = Error;
 
-export type ErrorType<Error> = AxiosError<Error>;

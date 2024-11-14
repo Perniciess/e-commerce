@@ -21,6 +21,7 @@ export const products_headers = [
     "Brand",
     "Size",
     "Color",
+    "Actions",
 ];
 
 export const carousel_headers = ["Name", "Category", "Subcategory", "Brand"];

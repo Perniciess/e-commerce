@@ -5,7 +5,7 @@ import { TableHTMLAttributes, PropsWithRef } from 'react';
 export type UiTableProps = {
   className?: string;
   headers: string[];
-  data: string[][];
+  data: (string | JSX.Element)[][];
   tableProps?: PropsWithRef<TableHTMLAttributes<HTMLTableElement>>;
 };
 

@@ -1,68 +1,38 @@
+import { useGetProducts } from '@/features/admin/model/use-get-products'
 import Image from "next/image";
 
-
-
 export function UiProductsList({ title }: { title: string }) {
-    const products = [
-        {
-            id: 1,
-            image: "/balance530.jpg",
-            name: "Product",
-            price: 100,
-            type: "Кроссовки",
-            brand: "New Balance",
-        },
-        {
-            id: 2,
-            image: "/balance530.jpg",
-            name: "Product",
-            price: 200,
-            type: "Кроссовки",
-            brand: "New Balance",
-        },
-        {
-            id: 3,
-            image: "/balance530.jpg",
-            name: "Product",
-            price: 300,
-            type: "Кроссовки",
-            brand: "New Balance",
-        },
-
-        {
-            id: 4,
-            image: "/balance530.jpg",
-            name: "530",
-            price: 300,
-            type: "Кроссовки",
-            brand: "New Balance",
-        },
-    ];
-
+    const { data: products } = useGetProducts();
+    const web_url = process.env.NEST_WEB_URL;
+    
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold">{title}</h1>
-            <ul className="flex flex-wrap">
-                {products.map((product) => (
+            <h1 className="text-2xl font-bold mb-4">{title}</h1>
+            <ul className="flex flex-wrap justify-center gap-4">
+                {products && products.map((product) => (
                     <li
-                        key={product.id}
-                        className="w-full p-2 sm:w-1/2 md:w-1/3 lg:w-1/4"
+                        key={product.product_id}
+                        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2"
                     >
-                        <div className="">
-                            <Image
-                                src={product.image}
-                                alt={product.name}
-                                width={500}
-                                height={400}
-                                className="rounded-t-lg border-l border-r border-t p-4 shadow-2xl"
-                            />
-                            <div className="rounded-b-lg bg-[#17171BFF] p-4 text-white">
-                                <h2 className="text-xl font-semibold">
-                                    {product.brand} {product.name}
-                                </h2>
-                                <p className="text-gray-600">{product.type}</p>
-
-                                <p className="text-lg">{product.price} ₽</p>
+                        <div className="flex flex-col h-full bg-white rounded-lg shadow-md">
+                            <div className="flex-shrink-0">
+                                <Image
+                                    src={`${web_url}uploads/${product.image.split("\\")[1]}`}
+                                    alt=""
+                                    layout="responsive"
+                                    objectFit="contain"
+                                    width={500}
+                                    height={400}
+                                    className="rounded-t-lg"
+                                />
+                            </div>
+                            <div className="flex-grow flex flex-col justify-between p-4 bg-[#17171BFF] text-white rounded-b-lg">
+                                <div>
+                                    <h2 className="text-xl font-semibold mb-2">
+                                        {product.brand.brand_name} {product.name}
+                                    </h2>
+                                </div>
+                                <p className="text-lg mt-4">{product.price} ₽</p>
                             </div>
                         </div>
                     </li>
