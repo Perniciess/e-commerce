@@ -10,6 +10,8 @@ COPY . .
 
 RUN yarn build
 
+ENV HOSTNAME="0.0.0.0"
+
 EXPOSE 3001
 
 CMD ["yarn", "start"]
