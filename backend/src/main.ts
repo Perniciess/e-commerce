@@ -10,10 +10,6 @@ import * as express from 'express';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    const uploadDir = join(process.cwd(), "uploads");
-    if (!existsSync(uploadDir)) {
-        mkdirSync(uploadDir);
-    }
     app.use(cookieParser());
     app.useGlobalPipes(new ValidationPipe());
     
@@ -22,7 +18,7 @@ async function bootstrap() {
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
         credentials: true,
     });
-
+    
     app.use('/uploads', express.static(join(process.cwd(), '/', 'uploads')));  
     await app.listen(3000);
 }
