@@ -16,9 +16,14 @@ export const createInstance = <T>(
     ...config,
     ...options,
   }).then((r) => r.data).catch((error: AxiosError) => {
-    alert("Ошибка подключения к базе данных");
+    // Check if the error status is not 404 or 401
+    if (error.response && error.response.status !== 404 && error.response.status !== 401) {
+      alert("Ошибка подключения к базе данных");
+    }
+    
+    // Re-throw the error so it can be handled further upstream if needed
     throw error;
-  });;
+  });
 };
 
 export type BodyType<Data> = Data;
