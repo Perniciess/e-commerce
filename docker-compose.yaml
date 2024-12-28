@@ -1,0 +1,51 @@
+version: "3.7"
+
+networks:
+  main:
+    name: main
+services:
+  backend:
+    image: exzenzia/backend:v4.0
+    container_name: backend
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - main
+  db:
+    image: exzenzia/database:v1.0
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1
+    networks:
+      - main
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  frontend:
+    image: exzenzia/frontend:v4.0
+    container_name: frontend
+    ports:
+      - "3001:3001"
+    networks:
+      - main
+
+  nginx:
+    # container_name: nginx
+    image: nginx:1.15.8-alpine
+    ports:
+        - "1080:80"
+        - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    restart: always
+    depends_on:
+        - frontend
+        - backend
+    networks:
+      - main
