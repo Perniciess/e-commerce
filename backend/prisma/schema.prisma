@@ -8,35 +8,31 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique @db.VarChar(55)
-  login     String  @unique @db.VarChar(55)
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(55)
+  login     String   @unique @db.VarChar(55)
   hash      String
   salt      String
-  role      Role    @default(User)
-  is_active Boolean @default(false)
-
-  baskets Basket[]
+  role      Role     @default(User)
+  is_active Boolean  @default(false)
+  baskets   Basket[]
 }
 
 model Product {
-  product_id  String  @id @default(uuid())
+  product_id  String     @id @default(uuid())
   name        String
-  price       Decimal @db.Decimal(9, 2)
+  price       Decimal    @db.Decimal(9, 2)
   description String
-  size        String  @db.VarChar(55)
+  size        String     @db.VarChar(55)
   color       String
   image       String
   brand_id    String
   category_id String
   carouselId  String?
-
-
-
-  brand      Brand      @relation(fields: [brand_id], references: [brand_id])
-  carousel Carousel? @relation(fields: [carouselId], references: [id])
-  basket     Basket[]
-  categories Category[]
+  basket      Basket[]
+  brand       Brand      @relation(fields: [brand_id], references: [brand_id])
+  carousel    Carousel?  @relation(fields: [carouselId], references: [id])
+  categories  Category[] @relation("CategoryToProduct")
 }
 
 model Category {
@@ -45,13 +41,12 @@ model Category {
   parentId String?
   parent   Category?  @relation("SubCategories", fields: [parentId], references: [id])
   children Category[] @relation("SubCategories")
-  products Product[]
+  products Product[]  @relation("CategoryToProduct")
 }
 
-
 model Carousel {
-  id        String   @id @default(uuid())
-  product  Product[]
+  id      String    @id @default(uuid())
+  product Product[]
 }
 
 model Brand {
@@ -61,23 +56,21 @@ model Brand {
 }
 
 model Basket {
-  record_id  Int    @id @default(autoincrement())
-  basket_id  Int    @unique
+  record_id  Int     @id @default(autoincrement())
+  basket_id  Int     @unique
   user_id    Int
   product_id String
   amount     Int
-
-  user     User    @relation(fields: [user_id], references: [id])
-  products Product @relation(fields: [product_id], references: [product_id])
-  order    Order   @relation(fields: [basket_id], references: [basket_id])
+  order      Order   @relation(fields: [basket_id], references: [basket_id])
+  products   Product @relation(fields: [product_id], references: [product_id])
+  user       User    @relation(fields: [user_id], references: [id])
 }
 
 model Order {
-  basket_id   Int    @id @default(autoincrement())
+  basket_id   Int     @id @default(autoincrement())
   address     String
   payment_key String
-
-  basket Basket?
+  basket      Basket?
 }
 
 enum Role {
