@@ -1,1 +1,0 @@
-ERROR [ExceptionsHandler] ENOENT: no such file or directory, stat - пофиксил, основная проблема из-за ввода неправильного адреса запроса

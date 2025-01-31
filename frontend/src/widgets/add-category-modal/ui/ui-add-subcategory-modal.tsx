@@ -74,7 +74,7 @@ export function UiAddSubCategoryModal() {
                         </div>
                         {errorMessage && (
                             <div className="text-rose-600">
-                                "{errorMessage}"
+                                `{errorMessage}`
                             </div>
                         )}
                     </form>
