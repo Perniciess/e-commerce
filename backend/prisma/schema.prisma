@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(uuid())
   email     String   @unique @db.VarChar(55)
   login     String   @unique @db.VarChar(55)
   hash      String
@@ -58,7 +58,7 @@ model Brand {
 model Basket {
   record_id  Int     @id @default(autoincrement())
   basket_id  Int     @unique
-  user_id    Int
+  user_id    String
   product_id String
   amount     Int
   order      Order   @relation(fields: [basket_id], references: [basket_id])

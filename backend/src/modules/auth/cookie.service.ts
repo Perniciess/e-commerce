@@ -1,20 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { Response } from 'express';
+import { Injectable } from '@nestjs/common'
+import { Response } from 'express'
 
 @Injectable()
 export class CookieService {
-    static tokenKey = 'access-token';
+	EXPIRE_DAY_REFRESH_TOKEN = 1
+	REFRESH_TOKEN_NAME = 'refreshToken'
 
-    setToken(res: Response, token: string) {
-        res.cookie(CookieService.tokenKey, token, {
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000,
-            sameSite: 'none',
-            secure: true,
-        });
-    }
+	setRefreshToken(res: Response, refreshToken: string) {
+		const expiresIn = new Date()
+		expiresIn.setDate(expiresIn.getDate() + this.EXPIRE_DAY_REFRESH_TOKEN)
 
-    removeToken(res: Response) {
-        res.clearCookie(CookieService.tokenKey);
-    }
+		res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
+			httpOnly: true,
+			domain: 'localhost',
+			expires: expiresIn,
+			secure: true,
+			sameSite: 'none', // 'lax' for subdomens
+		})
+	}
+
+	removeRefreshToken(res: Response) {
+		res.cookie(this.REFRESH_TOKEN_NAME, '', {
+			httpOnly: true,
+			domain: 'localhost',
+			expires: new Date(0),
+			secure: true,
+			sameSite: 'none', // 'lax' for subdomens
+		})
+	}
 }

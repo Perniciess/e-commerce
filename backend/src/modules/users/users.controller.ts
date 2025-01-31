@@ -1,48 +1,27 @@
-import { UsersService } from "./users.service";
-import {
-    Controller,
-    Param,
-    Delete,
-    Get,
-    ParseIntPipe,
-    Patch,
-    Body,
-    Res,
-} from "@nestjs/common";
-import { Response } from "express";
-import { CookieService } from "src/modules/auth/cookie.service";
+import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { UsersService } from './users.service'
 
-@Controller("/user")
+@Controller('/users')
 export class UserController {
-    constructor(
-        private usersService: UsersService,
-        private cookieService: CookieService,
-    ) {}
+	constructor(private usersService: UsersService) {}
 
-    @Get("/all")
-    async getAllUsers() {
-        return this.usersService.getAllUsers();
-    }
+	@Get('/all')
+	async getAllUsers() {
+		return this.usersService.getAllUsers()
+	}
+	@Get('/:email')
+	async findByEmail(@Param('email') email: string) {
+		return this.usersService.findByEmail(email)
+	}
 
-    @Get("/:id")
-    async findById(@Param("id", ParseIntPipe) id: number) {
-        return this.usersService.findById(id);
-    }
+	@Delete('/delete/:id')
+	async deleteUser(@Param('id') id: string) {
+		return this.usersService.deleteUser(id)
+	}
 
-    @Delete("/delete/:id")
-    async deleteUser(@Param("id", ParseIntPipe) id: number) {
-        return this.usersService.deleteUser(id);
-    }
-
-    @Patch("update/:id")
-    async updateUser(
-        @Param("id", ParseIntPipe) id: number,
-        @Body() body: UpdateUserDto,
-        @Res({ passthrough: true }) res: Response,
-    ) {
-        const { accessToken } = await this.usersService.updateUser(id, body);
-        this.cookieService.removeToken(res);
-        this.cookieService.setToken(res, await accessToken);
-    }
+	@Patch('update/:id')
+	async updateUser(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+		return this.usersService.updateUser(id, dto)
+	}
 }

@@ -1,59 +1,54 @@
-import {
-    Body,
-    Controller,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Post,
-    Res,
-    UseGuards,
-} from '@nestjs/common';
-import { Response } from 'express';
-import { SessionInfo } from '../../common/decorators/session-info.decorator';
-import { AuthGuard } from '../../common/guards/auth.guard';
-import { AuthService } from './auth.service';
-import { CookieService } from './cookie.service';
-import { getSessionDto } from './dto/getSession.dto';
-import { signInDto } from './dto/signIn.dto';
-import { signUpDto } from './dto/signUp.dto';
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, Res, UnauthorizedException } from '@nestjs/common'
+import { Request, Response } from 'express'
+import { AuthService } from './auth.service'
+import { CookieService } from './cookie.service'
+import { signInDto } from './dto/signIn.dto'
+import { signUpDto } from './dto/signUp.dto'
 
 @Controller('auth')
 export class AuthController {
-    constructor(
-        private authService: AuthService,
-        private cookieService: CookieService,
-    ) {}
+	constructor(
+		private authService: AuthService,
+		private cookieService: CookieService,
+	) {}
 
-    @Post('sign-up')
-    @HttpCode(HttpStatus.CREATED)
-    async signUp(
-        @Body() body: signUpDto,
-        @Res({ passthrough: true }) res: Response,
-    ) {
-        const { accessToken } = await this.authService.signUp(body);
-        this.cookieService.setToken(res, await accessToken);
-    }
+	@Post('sign-up')
+	@HttpCode(HttpStatus.CREATED)
+	async signUp(@Body() dto: signUpDto, @Res({ passthrough: true }) res: Response) {
+		const { refreshToken, ...response } = await this.authService.signUp(dto)
+		this.cookieService.setRefreshToken(res, refreshToken)
+		return response
+	}
 
-    @Post('sign-in')
-    @HttpCode(HttpStatus.OK)
-    async signIn(
-        @Body() body: signInDto,
-        @Res({ passthrough: true }) res: Response,
-    ) {
-        const { accessToken } = await this.authService.signIn(body);
-        this.cookieService.setToken(res, await accessToken);
-    }
+	@Post('sign-in')
+	@HttpCode(HttpStatus.OK)
+	async signIn(@Body() dto: signInDto, @Res({ passthrough: true }) res: Response) {
+		const { refreshToken, ...response } = await this.authService.signIn(dto)
+		this.cookieService.setRefreshToken(res, refreshToken)
+		return response
+	}
 
-    @Post('sign-out')
-    @HttpCode(HttpStatus.OK)
-    @UseGuards(AuthGuard)
-    signOut(@Res({ passthrough: true }) res: Response) {
-        this.cookieService.removeToken(res);
-    }
+	@Post('sign-out')
+	@HttpCode(HttpStatus.OK)
+	signOut(@Res({ passthrough: true }) res: Response) {
+		this.cookieService.removeRefreshToken(res)
+		return true
+	}
 
-    @Get('session')
-    @UseGuards(AuthGuard)
-    getSessionInfo(@SessionInfo() session: getSessionDto) {
-        return session;
-    }
+	@HttpCode(HttpStatus.OK)
+	@Post('refresh')
+	async getNewTokens(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+		const refreshTokenFromCookies = req.cookies[this.cookieService.REFRESH_TOKEN_NAME]
+
+		if (!refreshTokenFromCookies) {
+			this.cookieService.removeRefreshToken(res)
+			throw new UnauthorizedException('Refresh token not passed')
+		}
+
+		const { refreshToken, ...response } = await this.authService.getNewTokens(refreshTokenFromCookies)
+
+		this.cookieService.setRefreshToken(res, refreshToken)
+
+		return response
+	}
 }
