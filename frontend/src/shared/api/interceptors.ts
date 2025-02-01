@@ -1,6 +1,8 @@
 import axios, { type CreateAxiosDefaults } from 'axios'
 import { getAccessToken, removeFromStorage } from './auth-token.service'
 import { errorCatch } from './error'
+import { authService } from './auth.service'
+
 
 const options: CreateAxiosDefaults = {
 	baseURL: process.env.NEST_WEB_URL,
