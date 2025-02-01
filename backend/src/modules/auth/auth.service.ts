@@ -27,7 +27,7 @@ export class AuthService {
 	}
 
 	async signIn(dto: signInDto) {
-		const user = await this.usersService.findById(dto.email)
+		const user = await this.usersService.findByEmail(dto.email)
 		if (!user) {
 			throw new UnauthorizedException({ type: 'Пользователь не найден' })
 		}
