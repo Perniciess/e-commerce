@@ -14,26 +14,26 @@ export class AuthService {
 	) {}
 
 	async signUp(dto: signUpDto) {
-		const user = await this.usersService.findByEmail(dto.email)
+		const user = await this.usersService.getByEmail(dto.email)
 		if (user) {
 			throw new BadRequestException({ type: 'Почта уже используется' })
 		}
 
 		const salt = this.passwordService.getSalt()
-		const hash = this.passwordService.getHash(dto.password, salt)
-		const newUser = await this.usersService.createUser(dto.email, dto.login, hash, salt)
+		const password = this.passwordService.getHash(dto.password, salt)
+		const newUser = await this.usersService.createUser(dto.email, dto.login, password, salt)
 
 		return this.issueToken(newUser.id)
 	}
 
 	async signIn(dto: signInDto) {
-		const user = await this.usersService.findByEmail(dto.email)
+		const user = await this.usersService.getByEmail(dto.email)
 		if (!user) {
 			throw new UnauthorizedException({ type: 'Пользователь не найден' })
 		}
 
-		const hash = this.passwordService.getHash(dto.password, user.salt)
-		if (hash !== user.hash) {
+		const password = this.passwordService.getHash(dto.password, user.salt)
+		if (password !== user.password) {
 			throw new UnauthorizedException({ type: 'Wrong password' })
 		}
 
@@ -59,13 +59,13 @@ export class AuthService {
 
 		if (!result) throw new UnauthorizedException('Invalid refresh token')
 
-		const { ...userResult } = await this.usersService.findById(result.id)
+		const { ...userResult } = await this.usersService.getById(result.id)
 
 		if (!userResult) {
 			throw new UnauthorizedException({ type: 'User not found' })
 		}
 
-		const { hash, salt, ...user } = userResult
+		const { password, salt, ...user } = userResult
 
 		const tokens = this.issueToken(user.id)
 

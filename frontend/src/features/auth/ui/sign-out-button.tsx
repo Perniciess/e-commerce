@@ -1,15 +1,11 @@
-import { useSignOut } from "@/features/auth/model/use-sign-out";
-import { UiButton } from "@/shared/ui/ui-button";
+import { useSignOut } from '@/features/auth/lib/use-sign-out'
+import { UiButton } from '@/shared/ui/ui-button'
 
 export function SignOutButton() {
-    const { isLoading, signOut } = useSignOut();
-    return (
-        <UiButton
-            variant="black"
-            disabled={isLoading}
-            onClick={() => signOut({})}
-        >
-            Выйти
-        </UiButton>
-    );
+	const { isLoading, signOut } = useSignOut()
+	return (
+		<UiButton variant='black' disabled={isLoading} onClick={() => signOut()}>
+			Выйти
+		</UiButton>
+	)
 }

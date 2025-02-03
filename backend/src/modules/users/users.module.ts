@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
-import { CookieService } from 'src/modules/auth/cookie.service'
 import { UserController } from './users.controller'
 import { UsersService } from './users.service'
+import { PasswordService } from '../auth/password.service'
 
 @Module({
-	providers: [UsersService, CookieService],
+	providers: [UsersService, PasswordService],
 	exports: [UsersService],
 	controllers: [UserController],
 })

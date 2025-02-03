@@ -1,13 +1,12 @@
+import { getAccessToken, removeFromStorage, saveTokenStorage } from '@/shared/api/token-cookie'
 import axios, { type CreateAxiosDefaults } from 'axios'
-import { getAccessToken, removeFromStorage } from './auth-token.service'
 import { errorCatch } from './error'
-import { authService } from './auth.service'
-
+import { IAuthResponse } from './types/types'
 
 const options: CreateAxiosDefaults = {
 	baseURL: process.env.NEST_WEB_URL,
 	headers: {
-		'Content-Type': 'applications/json',
+		'Content-Type': 'application/json',
 	},
 	withCredentials: true,
 }
@@ -19,8 +18,8 @@ const axiosWithAuth = axios.create(options)
 axiosWithAuth.interceptors.request.use(config => {
 	const accessToken = getAccessToken()
 
-	if (config?.headers && accessToken)
-		config.headers.Authorization = `Bearer ${accessToken}`
+	if (config?.headers && accessToken) config.headers.Authorization = `Bearer ${accessToken}`
+
 	return config
 })
 
@@ -28,7 +27,6 @@ axiosWithAuth.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
-
 		if (
 			(error?.response?.status === 401 ||
 				errorCatch(error) === 'jwt expired' ||
@@ -38,16 +36,15 @@ axiosWithAuth.interceptors.response.use(
 		) {
 			originalRequest._isRetry = true
 			try {
-				await authService.getNewTokens()
+				const response = await axiosClassic.post<IAuthResponse>('/auth/refresh')
+				if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
 				return axiosWithAuth.request(originalRequest)
 			} catch (error) {
 				if (errorCatch(error) === 'jwt expired') removeFromStorage()
 			}
 		}
-
 		throw error
-	}
+	},
 )
-
 
 export { axiosClassic, axiosWithAuth }

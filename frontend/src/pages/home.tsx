@@ -1,5 +1,5 @@
 import { UiDefaultLayout } from '@/shared/ui/layouts/ui-layout-default-page'
-import { UiProductsList } from '@/widgets/catalog/ui/ui-products-list'
+import { UiProductsList } from '@/widgets/catalog/ui/ui-product-list'
 import { UiDescription } from '@/widgets/description/ui/ui-description'
 
 export default function Home() {
@@ -7,8 +7,7 @@ export default function Home() {
 		<>
 			<UiDefaultLayout>
 				<UiDescription />
-
-				<UiProductsList title='Популярные товары' />
+				<UiProductsList title='Популярные товары'/>
 			</UiDefaultLayout>
 		</>
 	)
