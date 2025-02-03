@@ -35,7 +35,36 @@ export class ProductsService {
 	}
 
 	async getProduct(id: string) {
-		return this.prisma.product.findUnique({ where: { product_id: id } })
+		return this.prisma.product.findUnique({
+			where: { product_id: id },
+			select: {
+				product_id: true,
+				name: true,
+				price: true,
+				size: true,
+				color: true,
+				image: true,
+				carousel: true,
+				brand: {
+					select: {
+						brand_id: true,
+						brand_name: true,
+					},
+				},
+				categories: {
+					select: {
+						parent: {
+							select: {
+								id: true,
+								name: true,
+							},
+						},
+						id:  true,
+						name: true,
+					},
+				},
+			},
+		})
 	}
 
 	async deleteProduct(id: string) {
