@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { InputHTMLAttributes, useId, PropsWithRef } from 'react'
+import { InputHTMLAttributes, PropsWithRef, useId } from 'react'
 
 export type UiTextFieldProps = {
 	className?: string
@@ -9,13 +9,7 @@ export type UiTextFieldProps = {
 	inputProps?: PropsWithRef<InputHTMLAttributes<HTMLInputElement>>
 }
 
-export function UiTextField({
-	className,
-	error,
-	placeholder,
-	label,
-	inputProps,
-}: UiTextFieldProps) {
+export function UiTextField({ className, error, placeholder, label, inputProps }: UiTextFieldProps) {
 	const id = useId()
 	return (
 		<div className={clsx(className, 'flex flex-col gap-1')}>
@@ -28,11 +22,7 @@ export function UiTextField({
 				{...inputProps}
 				placeholder={placeholder}
 				id={id}
-				className={clsx(
-					inputProps?.className,
-					'border h-8 outline-none px-3',
-					
-				)}
+				className={clsx(inputProps?.className, 'border h-8 outline-none px-3')}
 			/>
 			<div className='text-rose-400 text-sm'>{error}</div>
 		</div>

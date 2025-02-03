@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useGetProductList } from '../model/use-product-list'
+import { useGetProductList } from '../api/use-product-list'
 
 export function UiProductsList({ title }: { title: string }) {
 	const { data: products } = useGetProductList()

@@ -4,7 +4,7 @@ import { UiButton } from '@/shared/ui/ui-button'
 import { UiLink } from '@/shared/ui/ui-link'
 import Image from 'next/image'
 import { useState } from 'react'
-import { useGetCarousel } from '../model/use-description'
+import { useGetCarousel } from '../api/use-description'
 
 export function UiDescription() {
 	const [activeImage, setActiveImage] = useState(0)

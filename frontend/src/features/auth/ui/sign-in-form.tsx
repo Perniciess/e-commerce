@@ -1,4 +1,4 @@
-import { useSignInForm } from '@/features/auth/lib/use-sign-in-form'
+import { useSignInForm } from '@/features/auth/api/use-sign-in-form'
 import { ROUTES } from '@/shared/routing/routes'
 import { UiButton } from '@/shared/ui/ui-button'
 import { UiLink } from '@/shared/ui/ui-link'

@@ -1,6 +1,5 @@
-import Link from 'next/link'
 import clsx from 'clsx'
-
+import Link from 'next/link'
 
 export type UiLinkVariant = 'black' | 'gray' | 'white' | 'none'
 
@@ -19,8 +18,8 @@ export function UiLink({ className, variant, ...props }: UiLinkProps) {
 					black: 'text-slate-900',
 					gray: 'text-zinc-500 hover:text-zinc-400',
 					white: 'text-white hover:text-white',
-					none: ''
-				}[variant]
+					none: '',
+				}[variant],
 			)}
 		></Link>
 	)

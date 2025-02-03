@@ -1,4 +1,4 @@
-import { useSignOut } from '@/features/auth/lib/use-sign-out'
+import { useSignOut } from '@/features/auth/api/use-sign-out'
 import { UiButton } from '@/shared/ui/ui-button'
 
 export function SignOutButton() {

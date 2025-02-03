@@ -1,7 +1,7 @@
-import { getAccessToken, removeFromStorage, saveTokenStorage } from '@/shared/api/token-cookie'
+import { getAccessToken, removeFromStorage } from '@/shared/api/token-cookie'
 import axios, { type CreateAxiosDefaults } from 'axios'
+import { authService } from './auth/authApi'
 import { errorCatch } from './error'
-import { IAuthResponse } from './types/types'
 
 const options: CreateAxiosDefaults = {
 	baseURL: process.env.NEST_WEB_URL,
@@ -27,6 +27,7 @@ axiosWithAuth.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
+
 		if (
 			(error?.response?.status === 401 ||
 				errorCatch(error) === 'jwt expired' ||
@@ -36,13 +37,13 @@ axiosWithAuth.interceptors.response.use(
 		) {
 			originalRequest._isRetry = true
 			try {
-				const response = await axiosClassic.post<IAuthResponse>('/auth/refresh')
-				if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
+				await authService.getNewTokens()
 				return axiosWithAuth.request(originalRequest)
 			} catch (error) {
 				if (errorCatch(error) === 'jwt expired') removeFromStorage()
 			}
 		}
+
 		throw error
 	},
 )

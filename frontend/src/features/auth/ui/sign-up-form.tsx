@@ -1,4 +1,4 @@
-import { useSignUpForm } from '@/features/auth/lib/use-sign-up-form'
+import { useSignUpForm } from '@/features/auth/api/use-sign-up-form'
 import { ROUTES } from '@/shared/routing/routes'
 import { UiButton } from '@/shared/ui/ui-button'
 import { UiLink } from '@/shared/ui/ui-link'
