@@ -1,15 +1,15 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
 
 export class getSessionDto {
     @IsEmail()
     @IsNotEmpty()
-    email: string;
+    email: string
 
     @IsNotEmpty()
     @IsString()
-    login: string;
+    login: string
 
-    iat: number;
+    iat: number
 
-    exp: number;
+    exp: number
 }

@@ -1,3 +1,4 @@
+/* eslint-disable ts/consistent-type-imports */
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { UsersService } from './../users/users.service'
@@ -7,71 +8,72 @@ import { PasswordService } from './password.service'
 
 @Injectable()
 export class AuthService {
-	constructor(
-		private usersService: UsersService,
-		private passwordService: PasswordService,
-		private jwtService: JwtService,
-	) {}
+    constructor(
+        private usersService: UsersService,
+        private passwordService: PasswordService,
+        private jwtService: JwtService,
+    ) {}
 
-	async signUp(dto: signUpDto) {
-		const user = await this.usersService.getByEmail(dto.email)
-		if (user) {
-			throw new BadRequestException({ type: 'Почта уже используется' })
-		}
+    async signUp(dto: signUpDto) {
+        const user = await this.usersService.getByEmail(dto.email)
+        if (user) {
+            throw new BadRequestException({ type: 'Почта уже используется' })
+        }
 
-		const salt = this.passwordService.getSalt()
-		const password = this.passwordService.getHash(dto.password, salt)
-		const newUser = await this.usersService.createUser(dto.email, dto.login, password, salt)
+        const salt = this.passwordService.getSalt()
+        const password = this.passwordService.getHash(dto.password, salt)
+        const newUser = await this.usersService.createUser(dto.email, dto.login, password, salt)
 
-		return this.issueToken(newUser.id)
-	}
+        return this.issueToken(newUser.id)
+    }
 
-	async signIn(dto: signInDto) {
-		const user = await this.usersService.getByEmail(dto.email)
-		if (!user) {
-			throw new UnauthorizedException({ type: 'Пользователь не найден' })
-		}
+    async signIn(dto: signInDto) {
+        const user = await this.usersService.getByEmail(dto.email)
+        if (!user) {
+            throw new UnauthorizedException({ type: 'Пользователь не найден' })
+        }
 
-		const password = this.passwordService.getHash(dto.password, user.salt)
-		if (password !== user.password) {
-			throw new UnauthorizedException({ type: 'Wrong password' })
-		}
+        const password = this.passwordService.getHash(dto.password, user.salt)
+        if (password !== user.password) {
+            throw new UnauthorizedException({ type: 'Wrong password' })
+        }
 
-		return this.issueToken(user.id)
-	}
+        return this.issueToken(user.id)
+    }
 
-	private issueToken(userId: string) {
-		const accessToken = this.jwtService.sign({
-			id: userId,
-			expiresIn: '1h',
-		})
+    private issueToken(userId: string) {
+        const accessToken = this.jwtService.sign({
+            id: userId,
+            expiresIn: '1h',
+        })
 
-		const refreshToken = this.jwtService.sign({
-			id: userId,
-			expiresIn: '7d',
-		})
+        const refreshToken = this.jwtService.sign({
+            id: userId,
+            expiresIn: '7d',
+        })
 
-		return { accessToken, refreshToken }
-	}
+        return { accessToken, refreshToken }
+    }
 
-	async getNewTokens(refreshToken: string) {
-		const result = await this.jwtService.verifyAsync(refreshToken)
+    async getNewTokens(refreshToken: string) {
+        const result = await this.jwtService.verifyAsync(refreshToken)
 
-		if (!result) throw new UnauthorizedException('Invalid refresh token')
+        if (!result)
+            throw new UnauthorizedException('Invalid refresh token')
 
-		const { ...userResult } = await this.usersService.getById(result.id)
+        const { ...userResult } = await this.usersService.getById(result.id)
 
-		if (!userResult) {
-			throw new UnauthorizedException({ type: 'User not found' })
-		}
+        if (!userResult) {
+            throw new UnauthorizedException({ type: 'User not found' })
+        }
 
-		const { password, salt, ...user } = userResult
+        const { password, salt, ...user } = userResult
 
-		const tokens = this.issueToken(user.id)
+        const tokens = this.issueToken(user.id)
 
-		return {
-			user,
-			...tokens,
-		}
-	}
+        return {
+            user,
+            ...tokens,
+        }
+    }
 }

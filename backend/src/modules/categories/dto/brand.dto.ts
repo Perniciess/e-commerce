@@ -1,3 +1,3 @@
 export class BrandDto {
-	brand_name: string;
+    brand_name: string
 }
