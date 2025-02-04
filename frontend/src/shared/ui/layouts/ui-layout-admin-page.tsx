@@ -1,5 +1,5 @@
 import { ROUTES } from '@/shared/routing/routes'
-import { sidebarItemsAdmin } from '@/widgets/sidebar/model/config'
+import { sidebarItemsAdmin } from '@/widgets/sidebar/model/sidebarConstants'
 import { UiSidebar } from '@/widgets/sidebar/ui/ui-sidebar'
 
 export function UiLayoutAdminPage({

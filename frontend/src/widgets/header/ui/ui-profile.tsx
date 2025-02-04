@@ -7,29 +7,29 @@ import { UiBasketModal } from '@/widgets/basket-modal/ui/basket-modal'
 import { UiSearchModal } from '@/widgets/search-modal/ui/search-modal'
 
 export const UiProfile = () => {
-	const { data: session } = useSessionQuery()
+    const { data: session } = useSessionQuery()
 
-	const isAuth = (
-		<div className='flex justify-end items-center py-2'>
-			<UiSearchModal />
-			<UiBasketModal />
-			<UiLink variant='none' href={ROUTES.ACCOUNT}>
-				<UiIconUser />
-			</UiLink>
-		</div>
-	)
+    const isAuth = (
+        <div className="flex items-center justify-end py-2">
+            <UiSearchModal />
+            <UiBasketModal />
+            <UiLink variant="none" href={ROUTES.ACCOUNT}>
+                <UiIconUser />
+            </UiLink>
+        </div>
+    )
 
-	const isNotAuth = (
-		<div className='flex justify-end items-center'>
-			<div className='mr-2 mt-2'>
-				<UiSearchModal />
-			</div>
+    const isNotAuth = (
+        <div className="flex items-center justify-end">
+            <div className="mr-2 mt-2">
+                <UiSearchModal />
+            </div>
 
-			<UiLink variant='none' href={ROUTES.SIGNIN}>
-				<UiButton variant='black'>Войти</UiButton>
-			</UiLink>
-		</div>
-	)
+            <UiLink variant="none" href={ROUTES.SIGNIN}>
+                <UiButton variant="black">Войти</UiButton>
+            </UiLink>
+        </div>
+    )
 
-	return session ? isAuth : isNotAuth
+    return session ? isAuth : isNotAuth
 }

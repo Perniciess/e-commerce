@@ -1,31 +1,31 @@
+import type { ISignInForm } from '@/shared/api/auth/authTypes'
+import { authService } from '@/shared/api/auth/authApi'
 import { ROUTES } from '@/shared/routing/routes'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { authService } from '../../../shared/api/auth/authApi'
-import { ISignInForm } from '../../../shared/api/auth/authTypes'
 
 export function useSignInForm() {
-	const router = useRouter()
-	const { register, handleSubmit, reset } = useForm<ISignInForm>({
-		mode: 'onChange',
-	})
+    const router = useRouter()
+    const { register, handleSubmit, reset } = useForm<ISignInForm>({
+        mode: 'onChange',
+    })
 
-	const signInMutation = useMutation({
-		mutationKey: ['sign-in'],
-		mutationFn: (data: ISignInForm) => authService.signIn(data),
-		onSuccess() {
-			reset()
-			router.push(ROUTES.HOME)
-		},
-	})
+    const signInMutation = useMutation({
+        mutationKey: ['sign-in'],
+        mutationFn: async (data: ISignInForm) => authService.signIn(data),
+        onSuccess() {
+            reset()
+            void router.push(ROUTES.HOME)
+        },
+    })
 
-	const errorMessage = signInMutation.error ? 'Ошибка авторизации' : undefined
+    const errorMessage = signInMutation.error ? 'Ошибка авторизации' : undefined
 
-	return {
-		register,
-		errorMessage,
-		handleSubmit: handleSubmit(data => signInMutation.mutate(data)),
-		isPending: signInMutation.isPending,
-	}
+    return {
+        register,
+        errorMessage,
+        handleSubmit: handleSubmit(data => signInMutation.mutate(data)),
+        isPending: signInMutation.isPending,
+    }
 }
