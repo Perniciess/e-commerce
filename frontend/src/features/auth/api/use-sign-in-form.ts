@@ -15,8 +15,9 @@ export function useSignInForm() {
         mutationKey: ['sign-in'],
         mutationFn: async (data: ISignInForm) => authService.signIn(data),
         onSuccess() {
-            reset()
             void router.push(ROUTES.HOME)
+            reset()
+            
         },
     })
 

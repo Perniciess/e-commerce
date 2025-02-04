@@ -6,5 +6,5 @@ export interface UiCardProps {
 }
 
 export const UiCard = ({ children, className }: UiCardProps) => {
-    return <div className={clsx('rounded-lg bg-[#17171BFF] p-4 text-white shadow-xl', className)}>{children}</div>
+    return <div className={clsx('rounded-lg bg-zinc-950 p-4 text-white shadow-xl', className)}>{children}</div>
 }

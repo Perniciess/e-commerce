@@ -6,7 +6,7 @@ import { UiLink } from '../ui-link'
 export function UiFormPageLayout({ title, form }: { form?: ReactNode, title: string }) {
     return (
         <div className="flex min-h-screen flex-row">
-            <div className="w-1/2 bg-[#17171BFF]">
+            <div className="w-1/2 bg-zinc-950">
                 <div className="flex grow flex-row items-start justify-start pl-3 pt-1">
                     <UiLink variant="white" href={ROUTES.HOME} className="flex flex-row items-center justify-center">
                         <UiLogo className="size-12" color="white" />

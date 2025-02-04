@@ -14,7 +14,7 @@ export function UiSelect({ className, options, selectProps, label }: UiSelectPro
             <label className="mb-2 mr-2">{label}</label>
             <select
                 {...selectProps}
-                className={clsx('w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-black')}
+                className={clsx('w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-zinc-950')}
             >
                 {options.map(option => (
                     <option key={option.id} value={option.value}>

@@ -6,7 +6,6 @@ export function UiDefaultLayout({ children }: { children: React.ReactNode }) {
         <>
             <UiHeader />
             <div className="pt-20">{children}</div>
-
             <UiFooter />
         </>
     )

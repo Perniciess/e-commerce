@@ -13,7 +13,7 @@ export function UiSearchModal() {
                 ? (
                         <div className="fixed inset-0 z-10 overflow-y-auto">
                             <div
-                                className="fixed inset-0 size-full bg-black opacity-40"
+                                className="fixed inset-0 size-full bg-zinc-950 opacity-40"
                                 onClick={() => setShowModal(false)}
                             >
                             </div>
@@ -21,14 +21,14 @@ export function UiSearchModal() {
                                 <div className="relative mx-auto w-full max-w-lg rounded-md bg-white p-4 shadow-lg">
                                     <div className="mb-4 mt-2">
                                         <div className="text-center">
-                                            <h4 className="text-lg font-medium text-gray-800">Поиск товаров</h4>
+                                            <h4 className="text-lg font-medium text-zinc-950">Поиск товаров</h4>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center justify-center">
                                         <UiTextField className="w-3/4" inputProps={{ className: 'rounded-l-md' }} />
                                         <button type="submit">
-                                            <UiIconSearch className="mb-1 rounded-r bg-[#17171BFF]" color="white" />
+                                            <UiIconSearch className="mb-1 rounded-r bg-zinc-950" color="white" />
                                         </button>
                                     </div>
                                 </div>

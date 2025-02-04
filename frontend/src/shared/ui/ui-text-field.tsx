@@ -23,7 +23,7 @@ export function UiTextField({ className, error, placeholder, label, inputProps }
                 {...inputProps}
                 placeholder={placeholder}
                 id={id}
-                className={clsx(inputProps?.className, 'h-8 border px-3 outline-none')}
+                className={clsx(inputProps?.className, 'h-8 px-3 border-1 border-zinc-400 outline-0 focus-visible:border-2')}
 
             />
             <div className="text-sm text-rose-400">{error}</div>

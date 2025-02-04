@@ -15,8 +15,8 @@ export function UiLink({ className, variant, ...props }: UiLinkProps) {
                 className,
                 'cursor-pointer p-1',
                 {
-                    black: 'text-slate-900',
-                    gray: 'text-zinc-500 hover:text-zinc-400',
+                    black: 'text-zinc-950',
+                    gray: 'text-zinc-400 hover:text-zinc-300',
                     white: 'text-white hover:text-white',
                     none: '',
                 }[variant],

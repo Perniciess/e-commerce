@@ -4,6 +4,7 @@ import {
     getCoreRowModel,
     useReactTable,
 } from '@tanstack/react-table'
+import clsx from 'clsx'
 import * as React from 'react'
 
 interface Person {
@@ -84,15 +85,19 @@ export function UiTable() {
     })
 
     return (
-        <div className="rounded-md border">
-            <table className="w-full caption-bottom text-sm">
-                <thead className="border-b">
+        <div className="overflow-hidden rounded-lg border-1 border-zinc-400">
+            <table className="w-full text-sm border-collapse border-spacing-0">
+                <thead className="bg-white text-zinc-500">
                     {table.getHeaderGroups().map(headerGroup => (
-                        <tr key={headerGroup.id} className="border-b transition-colors">
-                            {headerGroup.headers.map(header => (
+                        <tr key={headerGroup.id}>
+                            {headerGroup.headers.map((header, index) => (
                                 <th
                                     key={header.id}
-                                    className=" h-12 px-4 text-left align-middle font-medium"
+                                    className={clsx(
+                                        'h-12 px-4 text-left align-middle font-medium ',
+                                        index === 0 && 'rounded-tl-lg ',
+                                        index === headerGroup.headers.length - 1 && 'rounded-tr-lg ',
+                                    )}
                                 >
                                     {header.isPlaceholder
                                         ? null
@@ -105,16 +110,25 @@ export function UiTable() {
                         </tr>
                     ))}
                 </thead>
-                <tbody className="">
-                    {table.getRowModel().rows.map(row => (
+                <tbody>
+                    {table.getRowModel().rows.map((row, rowIndex) => (
                         <tr
                             key={row.id}
-                            className="border-b transition-colors"
+                            className={clsx(
+                                'transition-colors',
+                                rowIndex === table.getRowModel().rows.length - 1 && 'rounded-b-lg ',
+                            )}
                         >
-                            {row.getVisibleCells().map(cell => (
+                            {row.getVisibleCells().map((cell, cellIndex) => (
                                 <td
                                     key={cell.id}
-                                    className="p-4 align-middle"
+                                    className={clsx(
+                                        'p-4 align-middle border-t-1 border-zinc-400',
+                                        rowIndex === table.getRowModel().rows.length - 1 && clsx(
+                                            cellIndex === 0 && 'rounded-bl-lg',
+                                            cellIndex === row.getVisibleCells().length - 1 && 'rounded-br-lg',
+                                        ),
+                                    )}
                                 >
                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                 </td>
