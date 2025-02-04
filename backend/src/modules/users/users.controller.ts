@@ -1,10 +1,9 @@
 /* eslint-disable ts/consistent-type-imports */
-/* eslint-disable perfectionist/sort-imports */
 import { Body, Controller, Delete, Get, Param, Put, UsePipes, ValidationPipe } from '@nestjs/common'
+import { Auth } from 'src/common/decorators/auth.decorator'
+import { CurrentUser } from 'src/common/decorators/user.decorator'
 import { UpdateUserDto } from './dto/user.dto'
 import { UsersService } from './users.service'
-import { CurrentUser } from 'src/common/decorators/user.decorator'
-import { Auth } from 'src/common/decorators/auth.decorator'
 
 @Controller('/users')
 export class UserController {

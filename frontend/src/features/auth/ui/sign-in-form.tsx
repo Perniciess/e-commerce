@@ -15,6 +15,7 @@ export function SignInForm() {
                     autoComplete: 'off',
                     ...register('email', { required: true }),
                     className: 'rounded-md',
+                    readOnly: true,
                 }}
             />
             <UiTextField

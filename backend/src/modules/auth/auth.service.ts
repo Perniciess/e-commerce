@@ -1,9 +1,9 @@
 /* eslint-disable ts/consistent-type-imports */
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { CreateUserDto } from './../users/dto/user.dto'
 import { UsersService } from './../users/users.service'
-import { signInDto } from './dto/signIn.dto'
-import { signUpDto } from './dto/signUp.dto'
+import { signInDto, signUpDto } from './dto/auth.dto'
 import { PasswordService } from './password.service'
 
 @Injectable()
@@ -22,7 +22,14 @@ export class AuthService {
 
         const salt = this.passwordService.getSalt()
         const password = this.passwordService.getHash(dto.password, salt)
-        const newUser = await this.usersService.createUser(dto.email, dto.login, password, salt)
+
+        const createUserDto: CreateUserDto = {
+            email: dto.email,
+            login: dto.login,
+            password,
+            salt,
+        }
+        const newUser = await this.usersService.createUser(createUserDto)
 
         return this.issueToken(newUser.id)
     }

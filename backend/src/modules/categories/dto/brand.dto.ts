@@ -1,3 +1,3 @@
 export class BrandDto {
-    brand_name: string
+    readonly brand_name: string
 }

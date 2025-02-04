@@ -3,8 +3,7 @@ import { Body, Controller, HttpCode, HttpStatus, Post, Req, Res, UnauthorizedExc
 import { Request, Response } from 'express'
 import { AuthService } from './auth.service'
 import { CookieService } from './cookie.service'
-import { signInDto } from './dto/signIn.dto'
-import { signUpDto } from './dto/signUp.dto'
+import { signInDto, signUpDto } from './dto/auth.dto'
 
 @Controller('auth')
 export class AuthController {

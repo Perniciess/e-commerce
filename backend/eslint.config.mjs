@@ -9,7 +9,7 @@ export default antfu(
         typescript: true,
         rules: {
             'n/prefer-global/process': 0,
-        }
+        },
     },
 
 )

@@ -3,8 +3,8 @@ import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import * as cookieParser from 'cookie-parser'
 import * as express from 'express'
+import { AppModule } from './app.module'
 import { CustomExceptionFilter } from './common/filters/not-found.filter'
-import { AppModule } from './modules/app/app.module'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)

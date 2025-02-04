@@ -10,7 +10,7 @@ export function UiHeader({ className }: { className?: string }) {
         <header
             className={clsx(
                 className,
-                'fixed top-0 z-50 w-full items-center border-b border-b-slate-300 bg-white px-3 py-1',
+                'fixed z-50 w-full items-center border-b border-b-slate-300 bg-white px-3 py-1',
             )}
         >
             <div className="flex w-full items-center justify-center">

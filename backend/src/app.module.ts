@@ -2,13 +2,11 @@ import * as path from 'node:path'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { ServeStaticModule } from '@nestjs/serve-static'
-import { AuthModule } from '../auth/auth.module'
-import { CategoriesModule } from '../categories/categories.module'
-import { PrismaModule } from '../prisma/prisma.module'
-import { ProductsModule } from '../products/products.module'
-import { UsersService } from '../users/users.service'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+import { AuthModule } from './modules/auth/auth.module'
+import { CategoriesModule } from './modules/categories/categories.module'
+import { PrismaModule } from './modules/prisma/prisma.module'
+import { ProductsModule } from './modules/products/products.module'
+import { UsersService } from './modules/users/users.service'
 
 @Module({
     imports: [
@@ -24,7 +22,6 @@ import { AppService } from './app.service'
         }),
         ConfigModule.forRoot(),
     ],
-    controllers: [AppController],
-    providers: [UsersService, AppService],
+    providers: [UsersService],
 })
 export class AppModule {}

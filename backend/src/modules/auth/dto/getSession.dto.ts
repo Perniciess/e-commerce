@@ -3,13 +3,13 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
 export class getSessionDto {
     @IsEmail()
     @IsNotEmpty()
-    email: string
+    readonly email: string
 
     @IsNotEmpty()
     @IsString()
-    login: string
+    readonly login: string
 
-    iat: number
+    readonly iat: number
 
-    exp: number
+    readonly exp: number
 }

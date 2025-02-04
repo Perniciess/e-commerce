@@ -1,20 +1,32 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator'
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class UserDto {
-    @IsOptional()
     @IsString()
     @IsEmail()
-    email: string
+    readonly email: string
 
     @IsString()
-    @IsOptional()
-    login: string
+    readonly login: string
 
     @IsString()
-    @IsOptional()
-    password: string
+    readonly password: string
+}
+
+export class CreateUserDto extends UserDto {
+    @IsString()
+    @IsNotEmpty()
+    readonly salt: string
 }
 
 export class UpdateUserDto extends UserDto {
-    salt: string
+    @IsOptional()
+    readonly email: string
+
+    @IsOptional()
+    readonly login: string
+
+    @IsOptional()
+    readonly password: string
+
+    readonly salt: string
 }

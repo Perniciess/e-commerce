@@ -1,11 +1,11 @@
 export class ProductDto {
-    product_id: string
-    name: string
-    price: number
-    description: string
-    size: string
-    color: string
-    brand_id: string
-    category_id: string
-    image: string
+    readonly product_id: string
+    readonly name: string
+    readonly price: number
+    readonly description: string
+    readonly size: string
+    readonly color: string
+    readonly brand_id: string
+    readonly category_id: string
+    readonly image: string
 }

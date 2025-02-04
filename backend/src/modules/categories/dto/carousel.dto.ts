@@ -1,4 +1,4 @@
 export class CarouselDto {
-    carousel_id: string
-    product_id: string
+    readonly carousel_id: string
+    readonly product_id: string
 }

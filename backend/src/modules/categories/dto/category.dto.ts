@@ -1,4 +1,4 @@
 export class CategoryDto {
-    name: string
-    parent_id?: number
+    readonly name: string
+    readonly parent_id?: number
 }
