@@ -7,24 +7,24 @@ import { UiTextField } from '@/shared/ui/ui-text-field'
 export function SignInForm() {
     const { handleSubmit, isPending, register, errorMessage } = useSignInForm()
     return (
-        <form className="flex flex-col gap-4 text-center" autoComplete="off" onSubmit={e => void handleSubmit(e)}>
+        <form className="flex flex-col gap-4 text-center" onSubmit={e => void handleSubmit(e)}>
             <UiTextField
                 label="Электронная почта"
                 inputProps={{
                     type: 'email',
-                    autoComplete: 'off',
                     ...register('email', { required: true }),
                     className: 'rounded-md',
-                    readOnly: true,
+                    autoComplete: 'none',
                 }}
+
             />
             <UiTextField
                 label="Пароль"
                 inputProps={{
                     type: 'password',
-                    autoComplete: 'off',
                     ...register('password', { required: true }),
                     className: 'rounded-md',
+                    autoComplete: 'new-password', // lol fix autocomplete
                 }}
             >
             </UiTextField>

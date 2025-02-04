@@ -12,7 +12,6 @@ export function SignUpForm() {
                 label="Электронная почта"
                 inputProps={{
                     type: 'email',
-                    autoComplete: 'off',
                     ...register('email', { required: true }),
                     className: 'rounded-md',
                 }}
@@ -21,7 +20,6 @@ export function SignUpForm() {
                 label="Логин"
                 inputProps={{
                     type: 'login',
-                    autoComplete: 'off',
                     ...register('login', { required: true }),
                     className: 'rounded-md',
                 }}
@@ -30,9 +28,9 @@ export function SignUpForm() {
                 label="Пароль"
                 inputProps={{
                     type: 'password',
-                    autoComplete: 'off',
                     ...register('password', { required: true }),
                     className: 'rounded-md',
+                    autoComplete: 'new-password', // lol fix autocomplete
                 }}
             />
             <UiButton disabled={isPending} variant="black" className="self-center">
@@ -45,7 +43,7 @@ export function SignUpForm() {
                     Вход
                 </UiLink>
             </p>
-            {errorMessage && <div className="text-rose-600">{errorMessage}</div>}
+            {errorMessage !== null && <div className="text-rose-600">{errorMessage}</div>}
         </form>
     )
 }

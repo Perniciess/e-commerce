@@ -12,3 +12,4 @@ NEST_WEB_URL="http://localhost:3000/"
 "ENOENT" if request on wrong URL
 
 
+shadcnui

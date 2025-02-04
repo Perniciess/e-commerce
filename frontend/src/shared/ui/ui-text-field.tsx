@@ -24,6 +24,7 @@ export function UiTextField({ className, error, placeholder, label, inputProps }
                 placeholder={placeholder}
                 id={id}
                 className={clsx(inputProps?.className, 'h-8 border px-3 outline-none')}
+
             />
             <div className="text-sm text-rose-400">{error}</div>
         </div>
