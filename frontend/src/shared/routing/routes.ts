@@ -12,6 +12,7 @@ export const ROUTES = {
 	ACCOUNT: '/user/account',
 	HISTORY: '/user/history',
 	SETTINGS: '/user/settings',
+	BASKET: '/user/basket',
 
 	ADMIN_INDEX: '/admin',
 	ADMIN_ACCOUNTS: '/admin/accounts',

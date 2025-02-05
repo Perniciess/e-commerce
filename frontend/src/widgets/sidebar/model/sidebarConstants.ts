@@ -7,6 +7,7 @@ import { PopularProductsIcon } from '../ui/icons/popular-products-icon'
 import { ProductsIcon } from '../ui/icons/products-icon'
 import { SettingsIcon } from '../ui/icons/settings-icon'
 import { UserIcon } from '../ui/icons/user-icon'
+import { UiBasketIcon } from '../ui/icons/basket-icon'
 
 export const sidebarItemsAdmin = [
     {
@@ -52,12 +53,18 @@ export const sidebarItems = [
     },
     {
         id: 1,
+        label: 'Моя корзина',
+        icon: UiBasketIcon,
+        href: ROUTES.BASKET
+    },
+    {
+        id: 2,
         label: 'История покупок',
         icon: BuyListIcon,
         href: ROUTES.HISTORY,
     },
     {
-        id: 2,
+        id: 3,
         label: 'Настройки',
         icon: SettingsIcon,
         href: ROUTES.SETTINGS,
